@@ -1,9 +1,9 @@
 <HTML>
   <HEAD>
-    <TITLE>Create JSON</TITLE>
+    <TITLE>Create table</TITLE>
   </HEAD>
   <BODY>
-    <H2>Create JSON from form</H2>
+    <H2>Create table from form</H2>
 
     <fieldset>
       <legend>
@@ -11,26 +11,40 @@
       </legend>
 
       <form method="post" action="">
-        {{ webform.csrf_token }}
+        <!--
+        { { webform.csrf_token }}
+        -->
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
 
-        {{ webform.name.label }}: {{webform.name(size=100, maxlength=300) }}
+        <table border=1>
+          <tr> 
+            <th>&nbsp;</th>
+            {% for col_indx in range(num_cols) %}
+            <th>{{ col_indx }}</th>
+            {% endfor %}
+          </tr>
+          {% for row_indx in range(num_rows) %}
+          <tr>
+            <td>{{ row_indx }}</td>
+            {% for col_indx in range(num_cols) %}
+            <td>
+              <!--
+              <span class="input-group-addon">Select from</span>
+              -->
+              <select name="input_row{{ row_indx }}_col{{ col_indx }}" class="selectpicker form-control" id="input_local">
+                {% for opt in list_of_opts %}
+                  <option value="{{ opt }}">{{ opt }}</option>
+                {% endfor %}
+              </select>
+            </td>
+            {% endfor %}
+          <tr>
+          {% endfor %}
+        </table>
 
         <P>
-          <span class="input-group-addon">Select from</span>
-            <select name="input_id" class="selectpicker form-control" id="input_local">
-              {% for opt in list_of_opts %}
-                <option value="{{ opt }}">{{ opt }}</option>
-              {% endfor %}
-            </select>
+          <input type="submit" name="submit_button" value="generate output">
         </P>
-
-        <P>
-          {{ webform.filename.label }}: {{ webform.filename(size=100, maxlength=300) }}
-        </P>
-
-        <P>
-          <input type="submit" name="submit_button" value="create JSON">
-
       </form>
     </fieldset>
   </BODY>

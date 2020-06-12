@@ -15,29 +15,49 @@
       </legend>
 
       <form method="post" action="">
-        {{ webform.csrf_token }}
+        <!--
+        { { webform.csrf_token }}
+        -->
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
 
-        {{ num_single }}
 
-        {{ num_double }}
- 
-        {{ webform.name.label }}: {{webform.name(size=100, maxlength=300) }}
+<input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+<label for="vehicle1"> I have a bike</label><br>
+<input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
+<label for="vehicle2"> I have a car</label><br>
+<input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
+<label for="vehicle3"> I have a boat</label><br>
 
+     <P>
+      X = \( \alpha \)
+     </P>
+
+     <P>
+      Y = \( \beta \)
+     </P>
+
+        <!-- 
+        { { webform.name.label }}: { {webform.name(size=100, maxlength=300) }}
+        -->
+
+  <!--
         <P>
           <span class="input-group-addon">Select from</span>
             <select name="input_id" class="selectpicker form-control" id="input_local">
-              {% for opt in list_of_opts %}
+              { % for opt in list_of_opts %}
                 <option value="{{ opt }}">{{ opt }}</option>
-              {% endfor %}
+              { % endfor %}
             </select>
         </P>
+  -->
 
+  <!--
         <P>
-          {{ webform.filename.label }}: {{ webform.filename(size=100, maxlength=300) }}
+          { { webform.filename.label }}: { { webform.filename(size=100, maxlength=300) }}
         </P>
-
+   -->
         <P>
-          <input type="submit" name="submit_button" value="create JSON">
+          <input type="submit" name="submit_button" value="enter form data">
 
       </form>
     </fieldset>

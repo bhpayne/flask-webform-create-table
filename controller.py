@@ -136,22 +136,22 @@ def table_dimensions():
             flash(str(err))
             return redirect(url_for("table_dimensions"))
         try:
-            x=int(request.form['number_of_sym_double'])
+            x=int(request.form['number_of_double_sym'])
         except Exception as err:
             flash(str(err))
             return redirect(url_for("table_dimensions"))
         try:
-            x=int(request.form['number_of_asym_double'])
+            x=int(request.form['number_of_double_asym'])
         except Exception as err:
             flash(str(err))
             return redirect(url_for("table_dimensions"))
 
         return redirect(url_for("entry_types", 
-                  num_rows=request.form['table_rows'],
-                  num_cols=request.form['table_cols'],
-                  num_single=request.form['number_of_single'],
-                  num_sym_double=request.form['number_of_sym_double'],
-                  num_asym_double=request.form['number_of_asym_double'],
+                  num_rows=int(request.form['table_rows']),
+                  num_cols=int(request.form['table_cols']),
+                  num_single=int(request.form['number_of_single']),
+                  num_sym_double=int(request.form['number_of_double_sym']),
+                  num_asym_double=int(request.form['number_of_double_asym']),
                   filename=request.form['filename']))
         
 
@@ -171,15 +171,29 @@ def entry_types(num_rows, num_cols, num_single, num_sym_double, num_asym_double,
     if request.method == "POST":  #  and webform.validate():
         logger.debug("request.form = %s", request.form)
 
+        list_of_opts = ['nop']
+
+        for k, v in request.form.items():
+            if 'vehicle' in k:
+                list_of_opts.append(request.form[k])
+
+        return redirect(url_for("table_content",
+                num_rows=int(num_rows),
+                num_cols=int(num_cols),
+                list_of_opts=list_of_opts,
+                filename=filename))
 
     logger.info("[trace page end " + trace_id + "]")
     return render_template("entry_types.html",
-                num_single=num_single,
-                num_double=num_double)
+                num_rows=int(num_rows),
+                num_cols=int(num_cols),
+                num_single=int(num_single),
+                num_sym_double=int(num_sym_double),
+                num_asym_double=int(num_asym_double))
 
 
-@app.route("/table_content/<num_rows>/<num_cols>/<num_single>/<num_sym_double>/<num_asym_double>/<filename>", methods=["GET", "POST"])
-def table_content(num_rows, num_cols, num_single, num_sym_double, num_asym_double, filename):
+@app.route("/table_content/<num_rows>/<num_cols>/<list_of_opts>/<filename>", methods=["GET", "POST"])
+def table_content(num_rows, num_cols, list_of_opts, filename):
     """
     step 3: table content
     """
@@ -188,11 +202,22 @@ def table_content(num_rows, num_cols, num_single, num_sym_double, num_asym_doubl
 
     if request.method == "POST":  #  and webform.validate():
         logger.debug("request.form = %s", request.form)
-
+        try:
+            compute.create_output(request.form, num_rows, num_cols, list_of_opts, filename)
+        except Exception as err:
+            flash(str(err))
+            logger.debug(str(err))
+            
+        
+        shutil.copy(filename, '/home/appuser/app/static/'+filename)
+        return redirect(url_for("static", filename=filename))    
 
     logger.info("[trace page end " + trace_id + "]")
-    return render_template("table_content.html")
-
+    return render_template("table_content.html",
+            list_of_opts=eval(list_of_opts), # because the variable is passed via the URL, the list is a string
+            num_rows=int(num_rows),
+            num_cols=int(num_cols))
+    
 
 if __name__ == "__main__":
     # this is only applicable for flask (and not gunicorn)
