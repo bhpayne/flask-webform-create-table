@@ -96,8 +96,11 @@ class TableSizeForm(FlaskForm):
     number_of_single = IntegerField(
         "number of single", validators=[validators.InputRequired(), validators.Length(max=100)]
     )
-    number_of_double = IntegerField(
-        "number of double", validators=[validators.InputRequired(), validators.Length(max=100)]
+    number_of_double_sym = IntegerField(
+        "number of symmetric double", validators=[validators.InputRequired(), validators.Length(max=100)]
+    )
+    number_of_double_asym = IntegerField(
+        "number of asymmetric double", validators=[validators.InputRequired(), validators.Length(max=100)]
     )
     filename = StringField("name of output file", validators=[validators.InputRequired(), validators.Length(max=1000)])
 
@@ -133,7 +136,12 @@ def table_dimensions():
             flash(str(err))
             return redirect(url_for("table_dimensions"))
         try:
-            x=int(request.form['number_of_double'])
+            x=int(request.form['number_of_sym_double'])
+        except Exception as err:
+            flash(str(err))
+            return redirect(url_for("table_dimensions"))
+        try:
+            x=int(request.form['number_of_asym_double'])
         except Exception as err:
             flash(str(err))
             return redirect(url_for("table_dimensions"))
@@ -142,7 +150,8 @@ def table_dimensions():
                   num_rows=request.form['table_rows'],
                   num_cols=request.form['table_cols'],
                   num_single=request.form['number_of_single'],
-                  num_double=request.form['number_of_double'],
+                  num_sym_double=request.form['number_of_sym_double'],
+                  num_asym_double=request.form['number_of_asym_double'],
                   filename=request.form['filename']))
         
 
@@ -151,8 +160,8 @@ def table_dimensions():
                            webform=webform)
 
 
-@app.route("/entry_types/<num_rows>/<num_cols>/<num_single>/<num_double>/", methods=["GET", "POST"])
-def entry_types(num_rows, num_cols, num_single, num_double, filename):
+@app.route("/entry_types/<num_rows>/<num_cols>/<num_single>/<num_sym_double>/<num_asym_double>/<filename>", methods=["GET", "POST"])
+def entry_types(num_rows, num_cols, num_single, num_sym_double, num_asym_double, filename):
     """
     step 2: what goes in the table?
     """
@@ -169,8 +178,8 @@ def entry_types(num_rows, num_cols, num_single, num_double, filename):
                 num_double=num_double)
 
 
-@app.route("/table_content/<num_rows>/<num_cols>/<num_single>/<num_double>/", methods=["GET", "POST"])
-def table_content():
+@app.route("/table_content/<num_rows>/<num_cols>/<num_single>/<num_sym_double>/<num_asym_double>/<filename>", methods=["GET", "POST"])
+def table_content(num_rows, num_cols, num_single, num_sym_double, num_asym_double, filename):
     """
     step 3: table content
     """

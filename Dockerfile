@@ -22,12 +22,17 @@ RUN apt-get update && \
                build-essential  \
 # generate pictures of graphs using dot
                graphviz \
+# npm for mathjax
+               npm \
     && rm -rf /var/lib/apt/lists/*
 
 # https://docs.docker.com/engine/reference/builder/#copy
 # requirements.txt contains a list of the Python packages needed for the PDG
 COPY requirements.txt /tmp
 
+# https://www.npmjs.com/package/mathjax
+RUN npm install mathjax@3
+#RUN npm install mathjax
 RUN pip3 install -r /tmp/requirements.txt
 
 RUN useradd --create-home appuser
@@ -43,6 +48,7 @@ COPY compute.py \
      /home/appuser/app/
 
 USER root
+RUN mv /node_modules/mathjax/es5 /home/appuser/app/static/mathjax
 RUN chown -R appuser /home/appuser/app && chgrp -R appuser /home/appuser/app
 
 USER appuser

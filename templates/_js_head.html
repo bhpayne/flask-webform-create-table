@@ -1,0 +1,74 @@
+
+
+
+
+    <!-- if inclusion of Mathjax on pages which don't have latex becomes a significant source of latency, see
+         http://docs.mathjax.org/en/latest/web/typeset.html#loading-mathjax-only-on-pages-with-math -->
+    <!-- http://docs.mathjax.org/en/latest/input/tex/eqnumbers.html -->
+    <script type="text/x-mathjax-config;executed=true">
+      MathJax.Hub.Config({ TeX: { equationNumbers: {autoNumber: "AMS"} } });
+    </script>
+    <script type="text/javascript">
+      window.MathJax = {
+        tex: {
+          tags: 'ams'
+        }
+      };
+    </script>
+    <!-- https://docs.mathjax.org/en/v2.7-latest/start.html -->
+<!--
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-MML-AM_CHTML">
+    </script>
+-->
+<!--
+    <script type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+-->
+<!--
+    <script type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+-->
+<!-- the following works for live preview of input based on
+     https://cdn.rawgit.com/mathjax/MathJax/2.7.1/test/sample-dynamic.html
+<script type="text/javascript" src="https://cdn.rawgit.com/mathjax/MathJax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+-->
+<!--
+    <script id="MathJax-script"
+    src="{{ url_for('static', filename='mathjax/tex-svg.js') }}"></script
+-->
+<!--
+the following is for Mathjax 3 that is loaded in the Docker build process using npm
+-->
+<!--
+    <script id="MathJax-script" async
+    src="{{ url_for('static', filename='mathjax/tex-svg.js') }}"></script>
+-->
+    <script id="MathJax-script" async
+    src="{{ url_for('static', filename='mathjax/tex-chtml.js') }}"></script>
+
+
+<!--
+the following is for mathjax in a separate docker image connected via docker-compose
+    <script id="MathJax-script" async
+    src="http://localhost:5009/tex-svg.js"></script>
+-->
+    <!-- THE FOLLOWING WORKS -->
+    <!-- http://docs.mathjax.org/en/latest/web/configuration.html#loading-mathjax -->
+<!--
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
+-->
+    <!-- The following is described on
+         http://docs.mathjax.org/en/latest/web/configuration.html
+         but isn't available -->
+    <!--
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.0.0/es5/latest?tex-svg.js">
+    </script>
+    -->
+
+
