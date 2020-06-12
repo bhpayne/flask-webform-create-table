@@ -1,2 +1,2 @@
-# flask-webform-create-table
-create table using Flask in Docker
+# flask-webform-create-json
+create a JSON file using a web interface

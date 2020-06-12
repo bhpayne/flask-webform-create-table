@@ -1,0 +1,38 @@
+<HTML>
+  <HEAD>
+    <TITLE>Create JSON</TITLE>
+  </HEAD>
+  <BODY>
+    <H2>Create JSON from form</H2>
+
+    <fieldset>
+      <legend>
+        <H2>provide parameters</H2>
+      </legend>
+
+      <form method="post" action="">
+        {{ webform.csrf_token }}
+
+        {{ webform.name.label }}: {{webform.name(size=100, maxlength=300) }}
+
+        <P>
+          <span class="input-group-addon">Select from</span>
+            <select name="input_id" class="selectpicker form-control" id="input_local">
+              {% for opt in list_of_opts %}
+                <option value="{{ opt }}">{{ opt }}</option>
+              {% endfor %}
+            </select>
+        </P>
+
+        <P>
+          {{ webform.filename.label }}: {{ webform.filename(size=100, maxlength=300) }}
+        </P>
+
+        <P>
+          <input type="submit" name="submit_button" value="create JSON">
+
+      </form>
+    </fieldset>
+  </BODY>
+</HTML>
+

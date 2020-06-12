@@ -1,0 +1,60 @@
+<HTML>
+  <HEAD>
+    <TITLE>specify table size</TITLE>
+  </HEAD>
+  <BODY>
+    <H2>Table size</H2>
+
+    <fieldset>
+      <legend>
+        <H2>provide parameters</H2>
+      </legend>
+
+      <form method="post" action="">
+        {{ webform.csrf_token }}
+
+        {{ webform.table_rows.label }}: {{webform.table_rows(size=100, maxlength=300) }}<BR>
+        {{ webform.table_cols.label }}: {{webform.table_cols(size=100, maxlength=300) }}<BR>
+        {{ webform.number_of_single.label }}: {{webform.number_of_single(size=100, maxlength=300) }}<BR>
+        {{ webform.number_of_double.label }}: {{webform.number_of_double(size=100, maxlength=300) }}<BR>
+
+<!--
+        <P>
+          <span class="input-group-addon">Select from</span>
+            <select name="input_id" class="selectpicker form-control" id="input_local">
+              { % for opt in list_of_opts %}
+                <option value="{{ opt }}">{{ opt }}</option>
+              { % endfor %}
+            </select>
+        </P>
+-->
+        <P>
+          {{ webform.filename.label }}: {{ webform.filename(size=100, maxlength=300) }}
+        </P>
+
+        <P>
+          <input type="submit" name="submit_button" value="create JSON">
+
+      </form>
+    </fieldset>
+
+<!-- https://flask.palletsprojects.com/en/1.1.x/patterns/flashing/ -->
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% if messages|length > 1 %}
+    MESSAGES:
+    {% else %}
+    MESSAGE:
+    {% endif %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+
+  </BODY>
+</HTML>
+

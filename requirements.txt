@@ -1,0 +1,34 @@
+# Flask==1.1.2
+Flask
+# Flask-WTF==0.14.3
+flask-wtf
+
+# visualize graphs as static PNG or SVG
+# graphviz==0.14
+graphviz
+
+wheel
+# gunicorn==20.0.4
+gunicorn
+
+# convert internal data structure to dataframe; 
+# also used for monitoring page when parsing logs
+# pandas==1.0.3
+pandas
+
+# code formatting and consistency checking
+# mypy==0.770
+mypy
+# pycallgraph==1.0.1
+pycallgraph
+# black==19.10b0
+black
+
+# validate JSON
+# jsonschema==3.2.0
+jsonschema
+
+# monitoring logs
+# matplotlib==3.2.1
+matplotlib
+
